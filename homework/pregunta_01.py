@@ -9,7 +9,7 @@ def pregunta_01():
     import matplotlib.pyplot as plt
     import os
 
-    output_dir = "files/docs"
+    output_dir = "docs"
     os.makedirs(output_dir, exist_ok=True)
 
     def load_data():
@@ -92,13 +92,32 @@ def pregunta_01():
     
         plt.savefig('docs/weight_distribution.png')
     
-    os.makedirs('docs',exist_ok=True)
     df=load_data()
     create_visual_for_shipping_per_warehouse(df)
     create_visual_for_mode_of_shipment(df)
     create_visual_for_average_customer_raiting(df)
     create_visual_for_weight_distribution(df)
-                
+
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Shippping Dashboard example</h1>
+            <div style="width:45%;float:left">
+                <img src="shipping_per_warehouse.png" alt="Fig 1">
+                <img src="mode_of_shipment.png" alt="Fig 2">
+            </div>
+            <div style="width:45%;float:left">
+                <img src="average_customer_rating.png" alt="Fig 3">
+                <img src="weight_distribution.png" alt="Fig 4">
+            </div>  
+        </body>
+    </html>
+    """
+
+    file_path = os.path.join(output_dir, "index.html")
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(html_content) 
     """
     El archivo `files//shipping-data.csv` contiene información sobre los envios
     de productos de una empresa. Cree un dashboard estático en HTML que
